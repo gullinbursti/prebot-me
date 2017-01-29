@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Pre - pre-sell while you make</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pre™ - Shop Bots">
+    <meta name="keywords" content="Pre™ - Shop Bots">
+    <link rel="icon" href="/assets/images/favicon.png">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href='https://fonts.googleapis.com/css?family=Poppins:400,600,700|Work+Sans:600,500,400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/animate.css"> <!-- Resource style -->
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css"> <!-- Resource style -->
+    <link href="/assets/css/style-claim.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="/assets/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+	  <script type="text/javascript" src="/assets/js/prebot-commons.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Homepage Main Section-->
+      <div class="main app-main">
+        <section class="split-home">
+					<div class="arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+					<div class="buy-button">
+						<a href="https://steamcommunity.com/tradeoffer/new/?partner=317337787&token=Mz9kSulb" class="wow  " data-wow-delay=".2s"><img src="/assets/images/signin_steam.png"></a>
+					</div>
+					
+          <section class="left-section app wow " data-wow-delay="0.1s">
+
+          </section>
+          <section class="right-section">
+						<div class="arrow"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+            <div class="main-logo">
+            <a href="/"><img class="wow " src="http://community.edgecast.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhjxszJemkV09-5lpKKqPrxN7LEm1Rd6dd2j6eQ9N2t2wK3-ENsZ23wcIKRdQE2NwyD_FK_kLq9gJDu7p_KyyRr7nNw-z-DyIFJbNUz/360fx360f" width="188" height="188" alt="Logo" style="border:0px solid #ccc; background:#fff; padding:10px" /></a>
+						
+            </div>
+            <div class="intro intro-app">
+              <div class="intro-text">
+
+                <h1 class="wow  " data-wow-delay=".1s">You won AK-47 | Redline for CS:GO</h1>
+                <p class="wow  ">
+									DESCRIPTION: Powerful and reliable, the AK-47 is one of the most popular assault rifles in the world...<br><br>
+									
+									<!--<a href="https://steamcommunity.com/tradeoffer/new/?partner=317337787&token=Mz9kSulb" class="wow  " data-wow-delay=".2s"><img src="/assets/images/signin_steam.png"></a>-->
+	                <a href="/assets/php/steam_auth.php?login" class="wow  " data-wow-delay=".2s"><img src="/assets/images/signin_steam.png"></a>
+								</p>
+           
+                
+              </div>
+            </div>
+            <div class="footer">
+              <span class="footer-credits">© Pre™</span>
+              <ul style="padding-left:15px;">
+                <li><a href="shops.html">Shops</a></li>
+                <li><a href="press.html">Press</a></li>
+                <li><a href="about.html">About</a></li>
+								<li><a href="terms.html">Terms</a></li>
+              </ul>
+          </div>
+         </section>
+       </section>
+      </div><!-- Main-->
+    </div><!-- Wrapper -->
+
+    <!-- Jquery and Js Plugins -->
+	  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/js/plugins.js"></script>
+    <script type="text/javascript" src="/assets/js/menu.js"></script>
+    <script type="text/javascript" src="/assets/js/custom.js"></script>
+    <script type="text/javascript" src="/assets/js/parallax.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.parallax.min.js"></script>
+    <script type="text/javascript" src="/assets/js/custom.js"></script>
+
+	  <script type="text/javascript">
+
+		  var kik_name = "";
+		  var claim_id = "";
+		  var steam_id = "";
+
+		  $(document).ready(function() {
+			  console_log("$(document).ready!!");
+
+			  if (typeof query_string['id'] != 'undefined' && typeof query_string['kik'] != 'undefined') {
+				  setCookie('claim_id', query_string['id']);
+				  setCookie('kik_name', query_string['kik']);
+			  }
+
+				if (typeof query_string['steam_id'] != 'undefined') {
+					setCookie('steam_id', query_string['steam_id'])
+				}
+
+			  kik_name = getCookie('kik_name');
+			  claim_id = getCookie('claim_id');
+			  steam_id = getCookie('claim_id');
+
+		  });
+	  </script>
+  </body>
+</html>
