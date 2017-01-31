@@ -1,3 +1,9 @@
+<?php
+
+$storefront_name = (isset($_GET['name'])) ? $_GET['name'] : "";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -7,7 +13,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>View Shops</title>
+		<title>Share Shop</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
@@ -22,16 +28,16 @@
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
+		<script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+
 		<link rel="stylesheet" href="/assets/css/prebot-commons.css" type="text/css" media="all" />
 		<script type="text/javascript" src="/assets/js/prebot-commons.js"></script>
 
-		<style type="text/css" rel="stylesheet" media="all">
-			.marketplace-wrapper {
-				margin: 0;
-				padding: 0;
-			}
-		</style>
+		<script type="text/javascript">
+			setCookie('storefront_name', (getCookie('storefront_name') == "") ? "<?= ($storefront_name); ?>" : getCookie('storefront_name'));
+		</script>
 	</head>
+
 	<body>
 		<script>
 			(function(d, s, id){
@@ -43,28 +49,38 @@
 			}(document, 'script', 'Messenger'));
 		</script>
 
+
 		<!-- Page Content -->
 		<div class="container">
-			<div class="row"><div class="marketplace-wrapper is-hidden"></div>
+			<div class="row">
+
 				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-					<a class="thumbnail" href="#">
-						<img class="img-responsive" src="http://placehold.it/400x300" alt="">
-						Gamebots
-					</a>
-				</div>
-				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-					<a class="thumbnail" href="#">
-						<img class="img-responsive" src="http://placehold.it/400x300" alt="">
-						Gamebots
-					</a>
-				</div>
-				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-					<a class="thumbnail" href="#">
-						<img class="img-responsive" src="http://placehold.it/400x300" alt="">
-						Gamebots
+					<a class="thumbnail fb-url" href="http://www.facebook.com/sharer.php?s=100&p[title]=YOURTITLE&p[url]=http://www.yourdomain.com&p[summary]=shortandsweetok&p[images][0]=http://www.image.to/appearwithlinkaftersharing.jpg" target="_blank">
+						<img class="img-responsive" src="/assets/images/fb.jpg" alt="">
+						Facebook
 					</a>
 				</div>
 
+				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+					<a class="thumbnail messenger-url" href="http://m.me/prebotme" target="_blank">
+						<img class="img-responsive" src="/assets/images/messenger.jpg" alt="">
+						Messenger
+					</a>
+				</div>
+
+				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+					<a class="thumbnail instagram-url" href="instagram://camera">
+						<img class="img-responsive" src="/assets/images/ig.jpg" alt="">
+						Instagram
+					</a>
+				</div>
+
+				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+					<a class="thumbnail twitter-url" href="https://twitter.com/intent/tweet?text=Hello%20world" target="_blank">
+						<img class="img-responsive" src="/assets/images/twitter.jpg" alt="">
+						Twitter
+					</a>
+				</div>
 			</div>
 
 			<!-- Footer -->
@@ -75,7 +91,6 @@
 					</div>
 				</div>
 			</footer>
-
 		</div>
 		<!-- /.container -->
 
@@ -85,6 +100,6 @@
 		<!-- Bootstrap Core JavaScript -->
 		<script src="/assets/js/bootstrap.min.js"></script>
 
-		<script type="text/javascript" src="/assets/js/shops.js"></script>
+		<script type="text/javascript" src="/assets/js/share.js"></script>
 	</body>
 </html>

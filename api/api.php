@@ -64,10 +64,11 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 					$query = 'SELECT COUNT(*) AS `tot` FROM `subscriptions` WHERE `storefront_id` = '. $storefront_obj->id .';';
 					$subscribers_result = mysql_query($query);
 
-					$query = 'SELECT COUNT(*) AS `tot` FROM `purchases` WHERE `product_id` IN (SELECT * FROM `products` WHERE `storefront_id` = '. $storefront_obj->id .');';
+					$query = 'SELECT COUNT(*) AS `tot` FROM `purchases` WHERE `product_id` IN (SELECT `id` FROM `products` WHERE `storefront_id` = '. $storefront_obj->id .');';
 					$preorders_result = mysql_query($query);
 
 					array_push($cards_arr, array(
+						'query'           => $query,
 						'type'            => CARD_TYPE_STOREFRONT,
 						'id'              => $storefront_obj->id,
 					  'owner_id'        => $storefront_obj->owner_id,
@@ -94,7 +95,7 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 	} elseif ($_POST['action'] == FETCH_STOREFRONT) {
 
 		$storefront_obj = array();
-		$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `id` = "'. $_POST['id'] .'" LIMIT 1;';
+		$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `id` = '. $_POST['id'] .' LIMIT 1;';
 		$result = mysql_query($query);
 
 		if (mysql_num_rows($result) == 1) {
@@ -132,6 +133,26 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 
 		echo(json_encode($storefront_obj));
 
+	} else if ($_POST['action'] == FETCH_STOREFRONT_SHARE) {
+		$storefront_obj = array();
+		$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `name` = "'. $_POST['storefront_name'] .'" LIMIT 1;';
+		$result = mysql_query($query);
+
+		if (mysql_num_rows($result) == 1) {
+			$obj = mysql_fetch_object($result);
+
+			$storefront_obj = array(
+				'id'           => $obj->id,
+				'owner_id'     => $obj->owner_id,
+				'name'         => $obj->name,
+				'display_name' => $obj->display_name,
+				'description'  => $obj->description,
+				'logo_url'     => $obj->logo_url,
+				'prebot_url'   => $obj->prebot_url
+			);
+		}
+
+		echo(json_encode($storefront_obj));
 	}
 }
 
