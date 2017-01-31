@@ -141,14 +141,22 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 		if (mysql_num_rows($result) == 1) {
 			$obj = mysql_fetch_object($result);
 
+			$query = 'SELECT `display_name`, `prebot_url` FROM `products` WHERE `storefront_id` = '. $obj->id .' AND `enabled` = 1 LIMIT 1;';
+			$result = mysql_query($query);
+
+			$p_obj = null;
+			if (mysql_num_rows($result) == 1) {
+				$p_obj = mysql_fetch_object($result);
+			}
+
 			$storefront_obj = array(
 				'id'           => $obj->id,
 				'owner_id'     => $obj->owner_id,
 				'name'         => $obj->name,
-				'display_name' => $obj->display_name,
+				'display_name' => (mysql_num_rows($result) == 1) ? $p_obj->display_name : $obj->display_name,
 				'description'  => $obj->description,
 				'logo_url'     => $obj->logo_url,
-				'prebot_url'   => $obj->prebot_url
+				'prebot_url'   => (mysql_num_rows($result) == 1) ? $p_obj->prebot_url : $obj->prebot_url
 			);
 		}
 

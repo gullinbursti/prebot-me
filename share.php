@@ -36,6 +36,13 @@ $storefront_name = (isset($_GET['name'])) ? $_GET['name'] : "";
 		<script type="text/javascript">
 			setCookie('storefront_name', (getCookie('storefront_name') == "") ? "<?= ($storefront_name); ?>" : getCookie('storefront_name'));
 		</script>
+
+		<style type="text/css" rel="stylesheet" media="all">
+			.prebot-url {
+				margin-bottom: 10px;
+				border-bottom: 1px solid #666;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -52,10 +59,11 @@ $storefront_name = (isset($_GET['name'])) ? $_GET['name'] : "";
 
 		<!-- Page Content -->
 		<div class="container">
+			<div class="prebot-url"></div>
 			<div class="row">
 
 				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-					<a class="thumbnail fb-url" href="http://www.facebook.com/sharer.php?s=100&p[title]=YOURTITLE&p[url]=http://www.yourdomain.com&p[summary]=shortandsweetok&p[images][0]=http://www.image.to/appearwithlinkaftersharing.jpg" target="_blank">
+					<a class="thumbnail fb-url" href="http://www.facebook.com/prebotme" target="_blank">
 						<img class="img-responsive" src="/assets/images/fb.jpg" alt="">
 						Facebook
 					</a>
@@ -76,7 +84,7 @@ $storefront_name = (isset($_GET['name'])) ? $_GET['name'] : "";
 				</div>
 
 				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
-					<a class="thumbnail twitter-url" href="https://twitter.com/intent/tweet?text=Hello%20world" target="_blank">
+					<a class="thumbnail twitter-url" href="https://twitter.com/intent/tweet" target="_blank">
 						<img class="img-responsive" src="/assets/images/twitter.jpg" alt="">
 						Twitter
 					</a>
