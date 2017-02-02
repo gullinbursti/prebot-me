@@ -1,9 +1,11 @@
 RewriteEngine on
 	RewriteRule ^intent/(.*)/?$ http://m.me/prebotme?ref=\/$1 [R=301,L,NE]
 	RewriteRule ^orders/(.*)/?$ /order.php?id=$1 [R=301,P]
+	RewriteRule ^purchases/(\d+)/?$ /purchases.php?type=customer&user_id=$1 [R=301,P]
+	RewriteRule ^purchases/stores/(\d+)/?$ /purchases.php?type=stores&user_id=$1 [R=301,P]
+	RewriteRule ^reserve/(.*)/?$ https://prebot.chat/reserve/$1 [R=301,L,NE]
 	RewriteRule ^share/(.*)/?$ /share.php?name=$1 [R=301,P]
 	RewriteRule ^shop/(.*)/?$ /share.php?name=$1 [R=301,P]
-	RewriteRule ^reserve/(.*)/?$ https://prebot.chat/reserve/$1 [R=301,L,NE]
 
 	RewriteRule ^thumbs/(.*)$ http://192.241.212.32/thumbs/$1 [R=301,P]
 	RewriteRule ^videos/(.*)$ http://192.241.212.32/videos/$1 [R=301,P]
@@ -15,10 +17,8 @@ RewriteEngine on
 	RewriteRule ^support/?$ /terms.html [R=301,P]
 	RewriteRule ^terms/?$ /terms.html [R=301,P]
 
-	#/- RewriteRule ^claim/steam/(.*)?$ http://prebot.me/claim.php?steam_id=$1 [R=301,L]
-  #/- RewriteRule ^claim/(\d+)/(.*)/?$ http://prebot.me/claim.php?id=$1&social=$2 [R=301,L]
-	RewriteRule ^claim/steam/(.*)?$ http://prebot.me/claim.php?steam_id=$1 [P]
-	RewriteRule ^claim/(\d+)/(.*)/?$ http://prebot.me/claim.php?id=$1&social=$2 [P]
+	RewriteRule ^claim/steam/(.*)?$ /claim.php?steam_id=$1 [P]
+	RewriteRule ^claim/(\d+)/(.*)/?$ /claim.php?id=$1&social=$2 [P]
 
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

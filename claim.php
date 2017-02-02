@@ -61,11 +61,11 @@ $steam_id = (isset($_GET['steam_id'])) ? $_GET['steam_id'] : "";
 
 						<div class="intro intro-app">
 							<div class="intro-text">
-								<p>1. Invite 2 friends to <a href="http://me.me/gamebotsc" target="_blank" style="padding-right:0px;">m.me/gamebotsc</a></p>
+<!--								<p>1. Invite 2 friends to <a href="http://me.me/gamebotsc" target="_blank" style="padding-right:0px;">m.me/gamebotsc</a></p>-->
 								<!--	<p>2. Give Gamebots +rep on Steam: <a href="http://steamcommunity.com/id/gamebots" target="_blank">steamcommunity.com/id/gamebots</a></p>-->
 								<!--<p>2. Give 5 stars to <a href="http://me.me/gamebotsc" target="_blank" style="padding-right:0px;">m.me/gamebotsc</a></p>-->
-								<p>2. Install & open free app: <a href="http://taps.io/BgNYg" target="_blank" style="padding-right:0px;">Install Here</a></p>
-								<p>3. Submit Steam Trade: <span class="trade-url"></span></p>
+<!--								<p>2. Install & open free app: <a href="http://taps.io/BgNYg" target="_blank" style="padding-right:0px;">Install Here</a></p>-->
+								<p>Submit Steam Trade: <span class="trade-url"></span></p>
 								<p style="font-size:12px;">Include the following security code inside your trade comments for approval: <span class="pin-code" style="font-size:12px;"></span> <span class="item-name" style="font-size:12px;"></span></p>
 							</div>
 							<div class="intro-text is-hidden">
