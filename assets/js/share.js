@@ -1,15 +1,15 @@
 
-function fill_storefront(storefront_name) {
-	console_log("fill_storefront("+storefront_name+"): ");
+function fill_storefront(storefront_id) {
+	console_log("fill_storefront("+storefront_id+"): ");
 
 	$.ajax({
 		url      : "/api/api.php",
 		method   : 'POST',
 		dataType : 'json',
 		data     : {
-			ACCESS_TOKEN    : ACCESS_TOKEN,
-			action          : "FETCH_STOREFRONT_SHARE",
-			storefront_name : storefront_name
+			ACCESS_TOKEN  : ACCESS_TOKEN,
+			action        : "FETCH_STOREFRONT_SHARE",
+			storefront_id : storefront_id
 		}
 	}).then(null, function (jqXHR, textStatus, errorThrown) {
 		console_log("populate_shop() --> .then <"+textStatus+", "+errorThrown+">");
@@ -32,5 +32,5 @@ function fill_storefront(storefront_name) {
 
 $(document).ready(function() {
 	console_log("$(document).ready!!");
-	fill_storefront(getCookie('storefront_name'));
+	fill_storefront(getCookie('storefront_id'));
 });

@@ -4,7 +4,7 @@ RewriteEngine on
 	RewriteRule ^purchases/(\d+)/?$ /purchases.php?type=customer&user_id=$1 [R=301,P]
 	RewriteRule ^purchases/stores/(\d+)/?$ /purchases.php?type=stores&user_id=$1 [R=301,P]
 	RewriteRule ^reserve/(.*)/?$ https://prebot.chat/reserve/$1 [R=301,L,NE]
-	RewriteRule ^share/(.*)/?$ /share.php?name=$1 [R=301,P]
+	RewriteRule ^share/(.*)/?$ /share.php?id=$1 [R=301,P]
 	RewriteRule ^shop/(.*)/?$ /share.php?name=$1 [R=301,P]
 
 	RewriteRule ^thumbs/(.*)$ http://192.241.212.32/thumbs/$1 [R=301,P]

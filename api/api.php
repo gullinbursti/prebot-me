@@ -135,7 +135,7 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 
 	} else if ($_POST['action'] == FETCH_STOREFRONT_SHARE) {
 		$storefront_obj = array();
-		$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `name` = "'. $_POST['storefront_name'] .'" LIMIT 1;';
+		$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `id` = '. $_POST['storefront_id'] .' LIMIT 1;';
 		$result = mysql_query($query);
 
 		if (mysql_num_rows($result) == 1) {

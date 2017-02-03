@@ -1,6 +1,6 @@
 <?php
 
-$storefront_name = (isset($_GET['name'])) ? $_GET['name'] : "";
+$storefront_id = (isset($_GET['id'])) ? $_GET['id'] : "";
 
 ?>
 
@@ -34,7 +34,7 @@ $storefront_name = (isset($_GET['name'])) ? $_GET['name'] : "";
 		<script type="text/javascript" src="/assets/js/prebot-commons.js"></script>
 
 		<script type="text/javascript">
-			setCookie('storefront_name', (getCookie('storefront_name') == "") ? "<?= ($storefront_name); ?>" : getCookie('storefront_name'));
+			setCookie('storefront_id', (getCookie('storefront_id') == "") ? "<?= ($storefront_id); ?>" : getCookie('storefront_id'));
 		</script>
 
 		<style type="text/css" rel="stylesheet" media="all">
