@@ -133,7 +133,7 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 
 		echo(json_encode($storefront_obj));
 
-	} else if ($_POST['action'] == FETCH_STOREFRONT_SHARE) {
+	} elseif ($_POST['action'] == FETCH_STOREFRONT_SHARE) {
 		$storefront_obj = array();
 		$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `id` = '. $_POST['storefront_id'] .' LIMIT 1;';
 		$result = mysql_query($query);
@@ -161,6 +161,17 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 		}
 
 		echo(json_encode($storefront_obj));
+
+	} elseif ($_POST['action'] == FETCH_PRODUCT) {
+		$query = 'SELECT `id`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `id` = '. $_POST['product_id'] .' LIMIT 1;';
+		$result = mysql_query($query);
+
+		$obj = array();
+		if (mysql_num_rows($result) > 0) {
+			$obj = mysql_fetch_object($result);
+		}
+
+		echo(json_encode($obj));
 	}
 }
 

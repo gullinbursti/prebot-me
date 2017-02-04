@@ -1,4 +1,6 @@
 RewriteEngine on
+	RewriteRule ^checkout/cancel/?$ /paypal.php?close [R=301,P]
+	RewriteRule ^checkout/paypal/(\d+)/?$ /paypal.php?product_id=$1 [R=301,P]
 	RewriteRule ^intent/(.*)/?$ http://m.me/prebotme?ref=\/$1 [R=301,L,NE]
 	RewriteRule ^orders/(.*)/?$ /order.php?id=$1 [R=301,P]
 	RewriteRule ^purchases/(\d+)/?$ /purchases.php?type=customer&user_id=$1 [R=301,P]
