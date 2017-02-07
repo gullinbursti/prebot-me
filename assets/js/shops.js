@@ -50,7 +50,7 @@ function populate_home_shops() {
 
 			var html = '';
 			html += '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
-			html += '  <a class="thumbnail" href="' + item.prebot_url + '">';
+			html += '  <a class="thumbnail" href="' + item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/prebotme?ref=/$2') + '">';
 			html += '    <img class="img-responsive" src="' + item.image_url + '" alt="">';
 			html += '    ' + item.storefront_name;
 			html += '  </a>';

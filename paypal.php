@@ -65,6 +65,11 @@ $is_close = (isset($_GET['$close']));
 				<input type="hidden" name="business" value="jason@modd.live">
 				<input type="hidden" name="currency_code" value="USD">
 				<input id="product-name" type="hidden" name="item_name" value="">
+				<input id="product-name" type="hidden" name="item_number" value="">
+				<input id="product-price" type="hidden" name="amount" value="">
+				<input id="customer-note" type="hidden" name="cn" value="Enter your trade URL below…">
+				<input id="customer-id" type="hidden" name="custom" value="">
+				<input id="product-price" type="hidden" name="notify_url" value="">
 				<input id="product-price" type="hidden" name="amount" value="">
 			</form>
 
@@ -80,3 +85,51 @@ $is_close = (isset($_GET['$close']));
 		<script type="text/javascript" src="/assets/js/paypal.js"></script>
 	</body>
 </html>
+
+
+
+<?php
+
+
+// acct api:
+$express_token = "access_token$production$5x9mkh6xz2wqwvh6$cc8f73cea0ac0524e1c3fa05ff6188a1";
+
+
+
+// business / verified / bank + cc
+$email = "biflindi.fjolnir@gmail.com";
+$passwd = "flashmaster";
+$phone = "4084127711";
+$country_code = "US";
+
+$acct_type = "Business";
+$acct_status = "Verified";
+
+$bank_acct = "541729804034068";
+$routing = "325272063";
+
+$cc_accout = "5110921317968124";
+$cc_type = "MASTERCARD";
+$cc_exp = "02/2022";
+
+$balance = "666.00";
+
+//api
+$email_id = "biflindi.fjolnir_api1.gmail.com";
+$passwd = "S2NWRBCFYNCC2AM3";
+$signature = "An5ns1Kso7MWUdW4ErQKJJJ4qi4-AOVvelEAAQsJNguk0VuPSnhP5s5w";
+
+
+
+// personal -- no verify / no bank
+$email_id = "arthurpewty888@gmail.com";
+$passwd = "montypython";
+$phone = "0359319698";
+$country_code = "GB";
+
+$acct_type = "personal";
+$acct_status = "unverified";
+
+$balance = "256.00";
+
+?>
