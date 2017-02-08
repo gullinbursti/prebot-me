@@ -27,19 +27,22 @@ function populate_home_shops() {
 		dataType : 'json',
 		data     : {
 			ACCESS_TOKEN : ACCESS_TOKEN,
-			action : FETCH_MARKETPLACE
+			action       : FETCH_MARKETPLACE,
+			offset       : 1,
+			limit        : 100
 		}
 	}).then(null, function (jqXHR, textStatus, errorThrown) {
-		console_log("populate_home_shops() --> .then <"+textStatus+", "+errorThrown+">");
+		console_log("populate_home_shops() --> .then(<"+jqXHR+">, <"+textStatus+">, <"+errorThrown+">)");
 
 	}).always(function () {
-		console_log("populate_home_shops() --> .always");
+		console_log("populate_home_shops() --> .always()");
 
 	}).fail(function (jqXHR, textStatus, errorThrown) {
-		console_log("populate_home_shops() --> .fail <"+textStatus+", "+errorThrown+">", 'error');
+		console_log("populate_home_shops() --> .fail(<"+jqXHR+">, <"+textStatus+">, <"+errorThrown+">", 'error');
 
 	}).done(function (data) {
-		console_log("populate_home_shops() --> .done<"+JSON.stringify(data, null, 3)+">");
+		console_log("populate_home_shops() --> .done(<"+JSON.stringify(data, null, 3)+">)");
+//		console_log("populate_home_shops() --> .done(<"+data.length+">)");
 
 		$('.marketplace-wrapper').empty();
 		$('.marketplace-wrapper').removeClass('is-hidden');
@@ -48,15 +51,18 @@ function populate_home_shops() {
 			//var matches = item.description.match(/^(.*)\b(\d+)$/);
 			//var release_info = matches[1] + Number(matches[2]).ordinal(true);
 
-			var html = '';
-			html += '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
-			html += '  <a class="thumbnail" href="' + item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/prebotme?ref=/$2') + '">';
-			html += '    <img class="img-responsive" src="' + item.image_url + '" alt="">';
-			html += '    ' + item.storefront_name;
-			html += '  </a>';
-			html += '</div>';
+			check_asset_url(item.image_url, function(isValid) {
+				console.lo
+				var html = '';
+				html += '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
+				html += '  <a class="thumbnail" href="' + item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/prebotme?ref=/$2') + '">';
+				html += '    <img class="img-responsive" src="' + ((isValid) ? item.image_url : "/assets/images/placeholder_storefront.gif") + '" width="400" alt="' + item.product_name + '">';
+				html += '    ' + item.storefront_name;
+				html += '  </a>';
+				html += '</div>';
 
-			$('.marketplace-wrapper').append(html);
+				$('.marketplace-wrapper').append(html);
+			});
 		});
 	});
 }

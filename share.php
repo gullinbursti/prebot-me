@@ -34,7 +34,7 @@ $storefront_id = (isset($_GET['id'])) ? $_GET['id'] : "";
 		<script type="text/javascript" src="/assets/js/prebot-commons.js"></script>
 
 		<script type="text/javascript">
-			setCookie('storefront_id', (getCookie('storefront_id') == "") ? "<?= ($storefront_id); ?>" : getCookie('storefront_id'));
+			setCookie('storefront_id', "<?= ($storefront_id); ?>");
 		</script>
 
 		<style type="text/css" rel="stylesheet" media="all">
@@ -61,7 +61,6 @@ $storefront_id = (isset($_GET['id'])) ? $_GET['id'] : "";
 		<div class="container">
 			<div class="prebot-url"></div>
 			<div class="row">
-
 				<div class="col-lg-3 col-md-4 col-xs-6 thumb">
 					<a class="thumbnail fb-url" href="http://www.facebook.com/prebotme" target="_blank">
 						<img class="img-responsive" src="/assets/images/fb.jpg" alt="">
@@ -89,6 +88,7 @@ $storefront_id = (isset($_GET['id'])) ? $_GET['id'] : "";
 						Twitter
 					</a>
 				</div>
+			</div>
 			</div>
 
 			<!-- Footer -->

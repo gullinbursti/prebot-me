@@ -56,6 +56,20 @@ function redirect(url, delay) {
 	}, delay);
 }
 
+function check_asset_url(url, callback) {
+	$.ajax({
+		url      : url,
+		method   : 'GET',
+		type     : 'HEAD'
+	}).then(null, function (jqXHR, textStatus, errorThrown) {
+//		console_log("check_asset_url() --> .then(<"+JSON.stringify(jqXHR, null, 3)+">, <"+textStatus+">, <"+errorThrown+">)");
+//		callback((textStatus == "success"));
+	}).done(function (data, textStatus) {
+		//console_log("check_asset_url() --> .done(<"+((typeof data != 'undefined') ? data.length : 0)+">, <"+textStatus+">)");
+		callback((textStatus == "success"));
+	});
+}
+
 /* *=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=*=-=* */
 
 function deleteCookie(key) {

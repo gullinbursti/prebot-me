@@ -19,77 +19,51 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 
 	// perform on api
 	if ($_POST['action'] == FETCH_MARKETPLACE) {
-		$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `enabled` = 1;';
+		$query = 'SELECT `id`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `storefront_id` IN (SELECT `id` FROM `storefronts` WHERE `enabled` = 1) AND `enabled` = 1 ORDER BY `added` DESC LIMIT '. $_POST['offset'] .', '. $_POST['limit'] .';';
+		#$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `enabled` = 1 AND  ORDER BY `added` DESC LIMIT '. $_POST['offset'] .', '. $_POST['limit'] .';';
 		$result = mysql_query($query);
 
 		// has results
-		$cards_arr = array();
+		$products_arr = array();
 		if (mysql_num_rows($result) > 0) {
-			while ($storefront_obj = mysql_fetch_object($result)) {
+			while ($product_obj = mysql_fetch_object($result)) {
 
-				// lookup product(s) per storefront
-				$storefronts_arr = array();
-				$query = 'SELECT `id`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `storefront_id` = ' . $storefront_obj->id . ' AND `enabled` = 1 LIMIT 1;';
-				$product_result = mysql_query($query);
+				$query = 'SELECT `storefronts`.`display_name`, `storefronts`.`views` FROM `storefronts` INNER JOIN `products` ON `storefronts`.`id` = `products`.`storefront_id` WHERE `products`.`id` = '. $product_obj->id .' LIMIT 1';
+				$storefront_result = mysql_query($query);
 
-				if (mysql_num_rows($product_result) > 0) {
-					$product_obj = mysql_fetch_object($product_result);
+				$storefront_obj = array();
+				if (mysql_num_rows($storefront_result) == 1) {
+					$storefront_obj = mysql_fetch_object($storefront_result);
 
 					$query = 'SELECT COUNT(*) AS `tot` FROM `subscriptions` WHERE `product_id` = '. $product_obj->id .';';
 					$subscribers_result = mysql_query($query);
 
 					$query = 'SELECT COUNT(*) AS `tot` FROM `purchases` WHERE `product_id` = '. $product_obj->id .';';
-					$preorders_result = mysql_query($query);
-
-					array_push($cards_arr, array(
-						'type'            => CARD_TYPE_PRODUCT,
-						'id'              => $product_obj->id,
-					  'name'            => $product_obj->name,
-					  'storefront_name' => $storefront_obj->display_name,
-					  'product_name'    => $product_obj->display_name,
-					  'description'     => $product_obj->description,
-					  'image_url'       => preg_replace('/\.(\w{3})$/', "-400.$1", $product_obj->image_url),
-					  'video_url'       => $product_obj->video_url,
-					  'prebot_url'      => $product_obj->prebot_url,
-					  'price'           => $product_obj->price,
-					  'views'           => $storefront_obj->views,
-					  'subscribers'     => (mysql_num_rows($subscribers_result) > 0) ? mysql_fetch_object($subscribers_result)->tot : 0,
-					  'preorders'       => (mysql_num_rows($preorders_result) > 0) ? mysql_fetch_object($preorders_result)->tot : 0,
-					  'release_date'    => $product_obj->release_date,
-					  'added'           => $product_obj->added
-					));
-
-				} else {
-
-					$query = 'SELECT COUNT(*) AS `tot` FROM `subscriptions` WHERE `storefront_id` = '. $storefront_obj->id .';';
-					$subscribers_result = mysql_query($query);
-
-					$query = 'SELECT COUNT(*) AS `tot` FROM `purchases` WHERE `product_id` IN (SELECT `id` FROM `products` WHERE `storefront_id` = '. $storefront_obj->id .');';
-					$preorders_result = mysql_query($query);
-
-					array_push($cards_arr, array(
-						'query'           => $query,
-						'type'            => CARD_TYPE_STOREFRONT,
-						'id'              => $storefront_obj->id,
-					  'owner_id'        => $storefront_obj->owner_id,
-					  'storefront_name' => $storefront_obj->display_name,
-					  'product_name'    => $product_obj->display_name,
-					  'description'     => $storefront_obj->description,
-					  'image_url'       => preg_replace('/\.(\w{3})$/', "-400.$1", $storefront_obj->logo_url),
-					  'prebot_url'      => $storefront_obj->prebot_url,
-					  'price'           => $product_obj->price,
-					  'views'           => $storefront_obj->views,
-					  'subscribers'     => (mysql_num_rows($subscribers_result) > 0) ? mysql_fetch_object($subscribers_result)->tot : 0,
-					  'preorders'       => (mysql_num_rows($preorders_result) > 0) ? mysql_fetch_object($preorders_result)->tot : 0,
-					  'added'           => $storefront_obj->added
-					));
+					$puchases_result = mysql_query($query);
 				}
-			}
 
+				array_push($products_arr, array(
+					'type'            => CARD_TYPE_PRODUCT,
+					'id'              => $product_obj->id,
+				  'name'            => $product_obj->name,
+				  'storefront_name' => $storefront_obj->display_name,
+				  'product_name'    => $product_obj->display_name,
+				  'description'     => $product_obj->description,
+				  'image_url'       => preg_replace('/\.(\w{3})$/', "-400.$1", $product_obj->image_url),
+				  'video_url'       => $product_obj->video_url,
+				  'prebot_url'      => $product_obj->prebot_url,
+				  'price'           => $product_obj->price,
+				  'views'           => $storefront_obj->views,
+				  'subscribers'     => (mysql_num_rows($subscribers_result) > 0) ? mysql_fetch_object($subscribers_result)->tot : 0,
+				  'purchases'       => (mysql_num_rows($puchases_result) > 0) ? mysql_fetch_object($puchases_result)->tot : 0,
+				  'release_date'    => $product_obj->release_date,
+				  'added'           => $product_obj->added
+				));
+			}
 			mysql_free_result($result);
 		}
 
-		echo(json_encode($cards_arr));
+		echo(json_encode($products_arr));
 
 
 	} elseif ($_POST['action'] == FETCH_STOREFRONT) {
