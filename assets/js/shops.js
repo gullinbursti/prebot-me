@@ -28,7 +28,7 @@ function populate_home_shops() {
 		data     : {
 			ACCESS_TOKEN : ACCESS_TOKEN,
 			action       : FETCH_MARKETPLACE,
-			offset       : 1,
+			offset       : 0,
 			limit        : 100
 		}
 	}).then(null, function (jqXHR, textStatus, errorThrown) {

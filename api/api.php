@@ -19,8 +19,7 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 
 	// perform on api
 	if ($_POST['action'] == FETCH_MARKETPLACE) {
-		$query = 'SELECT `id`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `storefront_id` IN (SELECT `id` FROM `storefronts` WHERE `enabled` = 1) AND `enabled` = 1 ORDER BY `added` DESC LIMIT '. $_POST['offset'] .', '. $_POST['limit'] .';';
-		#$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `enabled` = 1 AND  ORDER BY `added` DESC LIMIT '. $_POST['offset'] .', '. $_POST['limit'] .';';
+		$query = 'SELECT `id`, `storefront_id`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `storefront_id` IN (SELECT `id` FROM `storefronts` WHERE `enabled` = 1) AND `enabled` = 1 ORDER BY `added` DESC LIMIT '. $_POST['offset'] .', '. $_POST['limit'] .';';
 		$result = mysql_query($query);
 
 		// has results
@@ -28,7 +27,7 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 		if (mysql_num_rows($result) > 0) {
 			while ($product_obj = mysql_fetch_object($result)) {
 
-				$query = 'SELECT `storefronts`.`display_name`, `storefronts`.`views` FROM `storefronts` INNER JOIN `products` ON `storefronts`.`id` = `products`.`storefront_id` WHERE `products`.`id` = '. $product_obj->id .' LIMIT 1';
+				$query = 'SELECT `display_name`, `views` FROM `storefronts` WHERE `id` = '. $product_obj->storefront_id .' LIMIT 1;';
 				$storefront_result = mysql_query($query);
 
 				$storefront_obj = array();
@@ -60,14 +59,13 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 				  'added'           => $product_obj->added
 				));
 			}
-			mysql_free_result($result);
 		}
-
+    
+    mysql_free_result($result);
 		echo(json_encode($products_arr));
-
+		
 
 	} elseif ($_POST['action'] == FETCH_STOREFRONT) {
-
 		$storefront_obj = array();
 		$query = 'SELECT `id`, `owner_id`, `name`, `display_name`, `description`, `logo_url`, `prebot_url`, `views`, `added` FROM `storefronts` WHERE `id` = '. $_POST['id'] .' LIMIT 1;';
 		$result = mysql_query($query);
