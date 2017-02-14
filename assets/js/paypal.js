@@ -38,6 +38,9 @@ $(document).ready(function() {
 	console_log("$(document).ready!!");
 
 	if (getCookie('is_close') == "1") {
+		if (getCookie('customer_id')) {
+			console_log("HE'S BACK!!! ("+getCookie('customer_id')+")");
+		}
 		close_page();
 
 	} else {

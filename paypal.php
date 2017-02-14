@@ -1,6 +1,7 @@
 <?php
 
 $product_id = (isset($_GET['product_id'])) ? $_GET['product_id'] : "";
+$customer_id = (isset($_GET['customer_id'])) ? $_GET['customer_id'] : "";
 $is_close = (isset($_GET['$close']));
 
 ?>
@@ -32,7 +33,9 @@ $is_close = (isset($_GET['$close']));
 		<script type="text/javascript" src="/assets/js/prebot-commons.js"></script>
 
 		<script type="text/javascript">
+
 			setCookie('product_id', "<?= ($product_id); ?>");
+			setCookie('customer_id', "<?= ($customer_id); ?>");
 			setCookie('is_close', "<?= (intval($is_close == true)); ?>");
 		</script>
 
