@@ -1,7 +1,7 @@
 RewriteEngine on
   	RewriteRule ^checkout/cancel/?$ /paypal.php?close [R=301,P]
 	  RewriteRule ^checkout/paypal/(\d+)/(.+)/?$ /paypal.php?product_id=$1&customer_id=$2 [R=301,P]
-	  RewriteRule ^intent/(.*)/?$ http://m.me/prebotme?ref=\/$1 [R=301,L,NE]
+	  RewriteRule ^intent/(.*)/?$ http://m.me/lmon8?ref=\/$1 [R=301,L,NE]
 	  RewriteRule ^orders/(.*)/?$ /order.php?id=$1 [R=301,P]
 	  RewriteRule ^purchases/(\d+)/(\s+)/?$ /purchases.php?type=customer&product_id=$1 [R=301,P]
 	  RewriteRule ^purchases/stores/(\d+)/?$ /purchases.php?type=stores&user_id=$1 [R=301,P]
@@ -13,7 +13,8 @@ RewriteEngine on
 	  RewriteRule ^videos/(.*)$ http://192.241.212.32/videos/$1 [R=301,P]
 
 	  RewriteRule ^home/?$ / [R=301,P]
-	  RewriteRule ^shops/?$ /shops.html [R=301,P]
+#	  RewriteRule ^shops/?$ /shops.html [R=301,P]
+		RewriteRule ^shops/?$ /home [R=301,L]
 	  RewriteRule ^about/?$ /about.html [R=301,P]
 	  RewriteRule ^press/?$ /press.html [R=301,P]
 	  RewriteRule ^support/?$ /terms.html [R=301,P]

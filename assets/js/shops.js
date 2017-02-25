@@ -52,7 +52,6 @@ function populate_home_shops() {
 			//var release_info = matches[1] + Number(matches[2]).ordinal(true);
 
 			check_asset_url(item.image_url, function(isValid) {
-				console.lo
 				var html = '';
 				html += '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
 				html += '  <a class="thumbnail" href="' + item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/prebotme?ref=/$2') + '">';

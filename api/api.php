@@ -19,7 +19,7 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 
 	// perform on api
 	if ($_POST['action'] == FETCH_MARKETPLACE) {
-		$query = 'SELECT `id`, `storefront_id`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `storefront_id` IN (SELECT `id` FROM `storefronts` WHERE `enabled` = 1) AND `enabled` = 1 ORDER BY `added` DESC LIMIT '. $_POST['offset'] .', '. $_POST['limit'] .';';
+		$query = 'SELECT `id`, `storefront_id`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `storefront_id` IN (SELECT `id` FROM `storefronts` WHERE `enabled` = 1) AND `enabled` = 1 ORDER BY `added` DESC LIMIT ' . $_POST['offset'] . ', ' . $_POST['limit'] . ';';
 		$result = mysql_query($query);
 
 		// has results
@@ -27,43 +27,88 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 		if (mysql_num_rows($result) > 0) {
 			while ($product_obj = mysql_fetch_object($result)) {
 
-				$query = 'SELECT `display_name`, `views` FROM `storefronts` WHERE `id` = '. $product_obj->storefront_id .' LIMIT 1;';
+				$query = 'SELECT `display_name`, `views` FROM `storefronts` WHERE `id` = ' . $product_obj->storefront_id . ' LIMIT 1;';
 				$storefront_result = mysql_query($query);
 
 				$storefront_obj = array();
 				if (mysql_num_rows($storefront_result) == 1) {
 					$storefront_obj = mysql_fetch_object($storefront_result);
 
-					$query = 'SELECT COUNT(*) AS `tot` FROM `subscriptions` WHERE `product_id` = '. $product_obj->id .';';
+					$query = 'SELECT COUNT(*) AS `tot` FROM `subscriptions` WHERE `product_id` = ' . $product_obj->id . ';';
 					$subscribers_result = mysql_query($query);
 
-					$query = 'SELECT COUNT(*) AS `tot` FROM `purchases` WHERE `product_id` = '. $product_obj->id .';';
-					$puchases_result = mysql_query($query);
+					$query = 'SELECT COUNT(*) AS `tot` FROM `purchases` WHERE `product_id` = ' . $product_obj->id . ';';
+					$purchases_result = mysql_query($query);
 				}
 
 				array_push($products_arr, array(
 					'type'            => CARD_TYPE_PRODUCT,
 					'id'              => $product_obj->id,
-				  'name'            => $product_obj->name,
-				  'storefront_name' => $storefront_obj->display_name,
-				  'product_name'    => $product_obj->display_name,
-				  'description'     => $product_obj->description,
-				  'image_url'       => preg_replace('/\.(\w{3})$/', "-400.$1", $product_obj->image_url),
-				  'video_url'       => $product_obj->video_url,
-				  'prebot_url'      => $product_obj->prebot_url,
-				  'price'           => $product_obj->price,
-				  'views'           => $storefront_obj->views,
-				  'subscribers'     => (mysql_num_rows($subscribers_result) > 0) ? mysql_fetch_object($subscribers_result)->tot : 0,
-				  'purchases'       => (mysql_num_rows($puchases_result) > 0) ? mysql_fetch_object($puchases_result)->tot : 0,
-				  'release_date'    => $product_obj->release_date,
-				  'added'           => $product_obj->added
+					'name'            => $product_obj->name,
+					'storefront_name' => $storefront_obj->display_name,
+					'product_name'    => $product_obj->display_name,
+					'description'     => $product_obj->description,
+					'image_url'       => preg_replace('/\.(\w{3})$/', "-400.$1", $product_obj->image_url),
+					'video_url'       => $product_obj->video_url,
+					'prebot_url'      => $product_obj->prebot_url,
+					'price'           => $product_obj->price,
+					'views'           => $storefront_obj->views,
+					'subscribers'     => (mysql_num_rows($subscribers_result) > 0) ? mysql_fetch_object($subscribers_result)->tot : 0,
+					'purchases'       => (mysql_num_rows($purchases_result) > 0) ? mysql_fetch_object($purchases_result)->tot : 0,
+					'release_date'    => $product_obj->release_date,
+					'added'           => $product_obj->added
 				));
 			}
 		}
-    
-    mysql_free_result($result);
+
+		mysql_free_result($result);
 		echo(json_encode($products_arr));
-		
+
+
+	} elseif ($_POST['action'] == FETCH_FEATURE_STOREFRONTS) {
+		$query = 'SELECT `id`, `storefront_id`, `type`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `storefront_id` IN (SELECT `id` FROM `storefronts` WHERE `enabled` = 1 AND (`type` = 1 OR `type` = 2)) AND `enabled` = 1 AND (`type` = 1 OR `type` = 2) ORDER BY `added` DESC LIMIT 100;';
+		$result = mysql_query($query);
+
+		$products_arr = array();
+		while ($product_obj = mysql_fetch_object($result)) {
+			$query = 'SELECT `display_name` FROM `storefronts` WHERE `id` = ' . $product_obj->storefront_id . ' LIMIT 1;';
+			$storefront_result = mysql_query($query);
+			$storefront_name = (mysql_num_rows($storefront_result) == 1) ? mysql_fetch_object($storefront_result)->display_name : "";
+
+			array_push($products_arr, array(
+				'id'              => $product_obj->id,
+				'type'            => $product_obj->type,
+				'name'            => $product_obj->name,
+				'storefront_name' => $storefront_name,
+				'product_name'    => $product_obj->display_name,
+				'description'     => $product_obj->description,
+				'image_url'       => preg_replace('/\.(\w{3})$/', "-400.$1", $product_obj->image_url),
+				'video_url'       => $product_obj->video_url,
+				'prebot_url'      => $product_obj->prebot_url,
+				'price'           => $product_obj->price,
+				'release_date'    => $product_obj->release_date,
+				'added'           => $product_obj->added
+			));
+		}
+
+		mysql_free_result($result);
+		echo(json_encode($products_arr));
+
+	} elseif ($_POST['action'] == UPDATE_PRODUCT_TYPE) {
+		$query = 'SELECT `storefront_id` FROM `products` WHERE `id` = '. $_POST['product_id'] .' LIMIT 1;';
+		$result = mysql_query($query);
+
+		if (mysql_num_rows($result) == 1) {
+			$query = 'UPDATE `storefronts` SET `type` = '. $_POST['type'] .' WHERE `id` = '. mysql_fetch_object($result)->storefront_id .' LIMIT 1;';
+			$upd_result = mysql_query($query);
+
+			$query = 'UPDATE `products` SET `type` = '. $_POST['type'] .' WHERE `id` = '. $_POST['product_id'] .' LIMIT 1;';
+			$upd_result = mysql_query($query);
+		}
+
+		echo (json_encode(array(
+			'result' => true
+		)));
 
 	} elseif ($_POST['action'] == FETCH_STOREFRONT) {
 		$storefront_obj = array();
