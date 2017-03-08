@@ -66,7 +66,7 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 
 
 	} elseif ($_POST['action'] == FETCH_FEATURE_STOREFRONTS) {
-		$query = 'SELECT `id`, `storefront_id`, `type`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `storefront_id` IN (SELECT `id` FROM `storefronts` WHERE `enabled` = 1 AND (`type` = 1 OR `type` = 2)) AND `enabled` = 1 AND (`type` = 1 OR `type` = 2) ORDER BY `added` DESC LIMIT 100;';
+		$query = 'SELECT `id`, `storefront_id`, `type`, `name`, `display_name`, `description`, `image_url`, `video_url`, `price`, `prebot_url`, `release_date`, `added` FROM `products` WHERE `storefront_id` IN (SELECT `id` FROM `storefronts` WHERE `enabled` = 1 AND (`type` = 1 OR `type` = 2 OR `type` = 5 OR `type` = 6)) AND `enabled` = 1 AND (`type` = 1 OR `type` = 2 OR `type` = 5 OR `type` = 6) ORDER BY `added` DESC LIMIT 100;';
 		$result = mysql_query($query);
 
 		$products_arr = array();

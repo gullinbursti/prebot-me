@@ -52,7 +52,7 @@ function populate_feature_shops() {
 				html += '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
 				html += '  <div class="thumbnail" data-product-id="'+ item.id +'" style="margin-bottom:4px">';
 				html += '    <img class="img-responsive" src="' + ((isValid) ? item.image_url : "/assets/images/placeholder_storefront.gif") + '" width="400" alt="' + item.product_name + '" />' + item.storefront_name;
-				html += '    <i class="fa fa-check '+((item.type == 1) ? 'is-hidden' : '')+'" style="text-align:right;" aria-hidden="true"></i>';
+				html += '    <i class="fa fa-check '+((item.type == 1 || item.type == 2) ? 'is-hidden' : '')+'" style="text-align:right;" aria-hidden="true"></i>';
 				html += '  </div>';
 				html += '  <div class="deeplink"><a href="'+item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/lmon8?ref=/$2')+'" target="_blank">'+item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/lmon8?ref=/$2')+'</a></div>';
 				html += '</div>';
@@ -79,7 +79,7 @@ $(document).ready(function() {
 				ACCESS_TOKEN : ACCESS_TOKEN,
 				action       : UPDATE_PRODUCT_TYPE,
 				product_id   : $(this).attr('data-product-id'),
-				type         : (product_types[$(this).attr('data-product-id')] == 1) ? 2 : 1
+				type         : (product_types[$(this).attr('data-product-id')] == 1 || product_types[$(this).attr('data-product-id')] == 2) ? product_types[$(this).attr('data-product-id')] + 4 : product_types[$(this).attr('data-product-id')] - 4
 			}
 		}).then(null, function (jqXHR, textStatus, errorThrown) {
 			console_log("update_shop_type() --> .then(<"+jqXHR+">, <"+textStatus+">, <"+errorThrown+">)");
