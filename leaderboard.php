@@ -167,8 +167,8 @@ while($user_obj = mysql_fetch_object($result)) {
 		</div>
 		<div class="wrapper">
 			<table cellpadding="0" cellspacing="1">
-				<tr><td class="title" colspan="6">Purchases / Shop</td></tr>
-				<tr><td class="header">#</td><td class="header">Shop Name</td><td class="header">Owned By</td><td class="header">Product Name</td><td class="header quantity">Sold</td><td class="header quantity">Profit</td></tr>
+				<tr><td class="title" colspan="7">Purchases / Shop</td></tr>
+				<tr><td class="header">#</td><td class="header">Shop Name</td><td class="header">Owned By</td><td class="header">Subscriptions</td><td class="header">Product Name</td><td class="header quantity">Sold</td><td class="header quantity">Profit</td></tr>
 				<?php $cnt = 0;
 				foreach ($purchases_arr as $key=>$val) {
 					$query = 'SELECT `storefront_id`, `display_name`, `prebot_url`, `price`, `enabled` FROM `products` WHERE `id` = '. $key . ' LIMIT 1;';
@@ -176,9 +176,13 @@ while($user_obj = mysql_fetch_object($result)) {
 					if (mysql_num_rows($result) == 1) {
 						$product_obj = mysql_fetch_object($result);
 
-						$query = 'SELECT `owner_id`, `display_name`, `enabled` FROM `storefronts` WHERE `id` = '. $product_obj->storefront_id . ' LIMIT 1;';
+						$query = 'SELECT `id`, `owner_id`, `display_name`, `enabled` FROM `storefronts` WHERE `id` = '. $product_obj->storefront_id . ' LIMIT 1;';
 						$result = mysql_query($query);
 						$storefront_obj = mysql_fetch_object($result);
+
+						$query = 'SELECT COUNT(*) AS `tot` FROM `subscriptions` WHERE `storefront_id` = '. $storefront_obj->id . ' LIMIT 1;';
+						$result = mysql_query($query);
+						$subscription_total = mysql_fetch_object($result)->tot;
 
 						$query = 'SELECT `first_name`, `last_name` FROM `fb_users` WHERE `user_id` = '. $storefront_obj->owner_id . ' LIMIT 1;';
 						$result = mysql_query($query);
@@ -194,8 +198,9 @@ while($user_obj = mysql_fetch_object($result)) {
 					$html = "<td class='". $row_css ."'>". number_format($cnt) ."</td>";
 					$html .= "<td class='". $row_css ."". (($storefront_obj->enabled == 0) ? " disabled" : "") ."'>". $storefront_obj->display_name ."</td>";
 					$html .= "<td class='". $row_css ."'>". $fb_owner ."</td>";
+					$html .= "<td class='". $row_css ." quantity'>". number_format($subscription_total) ."</td>";
 					$html .= "<td class='". $row_css ."". (($product_obj->enabled == 0) ? " disabled" : "") ."'>". (($product_obj->enabled == 1) ? "<a href='". preg_replace('/^http\:\/\/prebot\.me\/(.*)$/', 'http://m.me/lmon8?ref=/$1', $product_obj->prebot_url) ."' target='_blank'>". $product_obj->display_name ."</a>" : $product_obj->display_name) ."</td>";
-					$html .= "<td class='". $row_css ." quantity'>". $val ."</td>";
+					$html .= "<td class='". $row_css ." quantity'>". number_format($val) ."</td>";
 					$html .= "<td class='". $row_css ." quantity'>". money_format('%n', ($product_obj->price * $val)) ."</td>";
 					echo ("<tr>". $html ."</tr>\n");
 				} ?>

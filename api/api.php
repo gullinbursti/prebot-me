@@ -189,6 +189,15 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 		}
 
 		echo(json_encode($obj));
+
+	} elseif ($_POST['action'] == VALIDATE_PRODUCT) {
+		$query = 'SELECT `id` FROM `storefronts` WHERE `prebot_url` = "'. preg_replace('/^.*\=(.+)$/', "http://prebot.me/$1", $_POST['prebot_url']) .'" LIMIT 1;';
+		$result = mysql_query($query);
+
+		echo(json_encode(array(
+			'prebot_url' => preg_replace('/^.*\=(.+)$/', "http://prebot.me/$1", $_POST['prebot_url']),
+			'result' => (mysql_num_rows($result) > 0)
+		)));
 	}
 }
 

@@ -189,7 +189,7 @@ if (!Number.prototype.ordinal) {
 			suffix = 'nd';
 
 		} else if (digit == 3) {
-			suffix = 'nd';
+			suffix = 'rd';
 		}
 
 		return (this.toString() + ((isHTML) ? '<sup>' + suffix + '</sup>' : suffix));
