@@ -71,18 +71,21 @@ if (isset($_POST['ACCESS_TOKEN'])) {
 
 		$products_arr = array();
 		while ($product_obj = mysql_fetch_object($result)) {
-			$query = 'SELECT `display_name` FROM `storefronts` WHERE `id` = ' . $product_obj->storefront_id . ' LIMIT 1;';
+			$query = 'SELECT `display_name`, `description`, `logo_url` FROM `storefronts` WHERE `id` = ' . $product_obj->storefront_id . ' LIMIT 1;';
 			$storefront_result = mysql_query($query);
-			$storefront_name = (mysql_num_rows($storefront_result) == 1) ? mysql_fetch_object($storefront_result)->display_name : "";
+			$storefront_obj = mysql_fetch_object($storefront_result);
+
 
 			array_push($products_arr, array(
 				'id'              => $product_obj->id,
 				'type'            => $product_obj->type,
 				'name'            => $product_obj->name,
-				'storefront_name' => $storefront_name,
+				'storefront_name' => $storefront_obj->display_name,
+				'description'     => $storefront_obj->description,
+				'logo_url'        => $storefront_obj->logo_url,
 				'product_name'    => $product_obj->display_name,
-				'description'     => $product_obj->description,
-				'image_url'       => preg_replace('/\.(\w{3})$/', "-400.$1", $product_obj->image_url),
+//				'image_url'       => preg_replace('/\.(\w{3})$/', "-400.$1", $product_obj->image_url),
+				'image_url'       => $product_obj->image_url,
 				'video_url'       => $product_obj->video_url,
 				'prebot_url'      => $product_obj->prebot_url,
 				'price'           => $product_obj->price,

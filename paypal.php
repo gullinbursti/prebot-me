@@ -61,7 +61,7 @@ $is_close = (isset($_GET['$close']));
 
 			<form id="frm-paypal" class="is-hidden" action="https://www.paypal.com/cgi-bin/webscr" method="post">
 				<input type="hidden" name="cmd" value="_xclick">
-				<input type="hidden" name="image_url" value="https://scard.tv/static/logo-paypal.jpg">
+				<input type="hidden" name="image_url" value="https://scard.tv/static/images/logo-paypal.jpg">
 				<input type="hidden" name="no_shipping" value="1">
 				<input type="hidden" name="return" value="http://prebot.me/checkout/cancel">
 				<input type="hidden" name="cancel_return" value="http://prebot.me/checkout/cancel">
@@ -72,8 +72,7 @@ $is_close = (isset($_GET['$close']));
 				<input id="product-price" type="hidden" name="amount" value="">
 				<input id="customer-note" type="hidden" name="cn" value="Enter your trade URL below…">
 				<input id="customer-id" type="hidden" name="custom" value="">
-				<input id="product-price" type="hidden" name="notify_url" value="">
-				<input id="product-price" type="hidden" name="amount" value="">
+				<input id="notify-url" type="hidden" name="notify_url" value="">
 			</form>
 
 		</div>

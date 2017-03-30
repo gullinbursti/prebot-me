@@ -30,13 +30,17 @@ function populate_feature_shops() {
 			var isValid = true;
 			product_types[item.id] = parseInt(item.type);
 //			check_asset_url(item.image_url.replace(/^.*\/thumbs\/(.*)$/g, 'http://prebot.me/thumbs/$1'), function(isValid) {
-				var html = '';
-				html += '<div>';
-				html += '<div class="thumbnail" data-product-id="'+ item.id +'"><img src="' + ((isValid) ? item.image_url.replace(/^.*\/thumbs\/(.*)$/g, 'http://prebot.me/thumbs/$1') : "/assets/images/placeholder_storefront.gif") + '" width="400" alt="' + item.product_name + '" /></div>';
-				html += '<div><i class="fa fa-check '+((item.type == 1 || item.type == 2) ? 'is-hidden' : '')+'" style="text-align:right;" aria-hidden="true"></i>' + item.storefront_name + '</div>';
-				html += '<div class="deeplink"><a href="'+item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/lmon8?ref=/$2')+'" target="_blank">'+item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/lmon8?ref=/$2')+'</a></div>';
-				html += "</div>";
-				html += "<hr />";
+
+			var image_url = (item.image_url.includes("imgur")) ? item.image_url : item.image_url.replace(/^.*\/thumbs\/(.*)$/g, 'http://prebot.me/thumbs/$1');
+
+			var html = '';
+			html += '<div class="row ' + ((item.type != 1 && item.type != 2) ? 'checked' : '') + '">';
+			html += '<div><img src="' + item.logo_url + '" width="50" alt="' + item.storefront_name + '" />' + item.storefront_name + ' - ' + item.description + '</div>';
+			html += '<div class="thumbnail" data-product-id="'+ item.id +'"><img src="' + ((isValid) ? image_url : "/assets/images/placeholder_storefront.gif") + '" width="400" alt="' + item.product_name + '" /></div>';
+			html += '<div><i class="fa fa-check ' + ((item.type == 1 || item.type == 2) ? 'is-hidden' : '') + '" style="text-align:right;" aria-hidden="true"></i>' + item.product_name + '</div>';
+			html += '<div class="deeplink"><a href="'+item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/lmon8?ref=/$2')+'" target="_blank">'+item.prebot_url.replace(/^(.*)\/(.+)$/g, 'http://m.me/lmon8?ref=/$2')+'</a></div>';
+			html += "</div>";
+			html += "<hr />";
 
 
 //				html += '<div class="col-lg-3 col-md-4 col-xs-6 thumb">';
